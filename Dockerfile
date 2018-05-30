@@ -1,8 +1,8 @@
 FROM centos:latest
 
 ### Install and configure SSH Server for SSH access to container ###
-RUN yum update && \
-    yum -y --nodocs install \
+#RUN yum update -y
+RUN yum install -y \
 		openssh \
 		openssh-server \
 		openssh-clients \
