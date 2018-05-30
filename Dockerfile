@@ -1,7 +1,9 @@
 FROM centos:latest
 
 ### Install and configure SSH Server for SSH access to container ###
-#RUN yum update -y
+RUN yum update -y && \
+    yum clean all
+
 RUN yum install -y \
 		openssh \
 		openssh-server \
@@ -12,8 +14,11 @@ RUN yum install -y \
 		net-tools && \
    yum clean all
 
-RUN sshd-keygen && \
-    sed -i "s/UsePAM.*/UsePAM yes/g" /etc/ssh/sshd_config && \
+RUN mkdir /var/run/sshd
+
+RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
+
+RUN sed -i "s/UsePAM.*/UsePAM yes/g" /etc/ssh/sshd_config && \
     sed -i "s/#UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config && \
     useradd admin -G wheel -s /bin/bash -m && \
     echo 'root:radiuid' | chpasswd && \
@@ -33,5 +38,5 @@ EXPOSE 1813/udp
 EXPOSE 1813/tcp
 EXPOSE 22/tcp
 
-CMD /usr/sbin/sshd
+ENTRYPOINT ["/usr/sbin/sshd", "-D"]
 #CMD radiusd & radiuid run >> /etc/radiuid/STDOUT & /usr/sbin/sshd >> /etc/radiuid/SSH-STDOUT & /bin/bash
