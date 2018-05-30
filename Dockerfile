@@ -1,9 +1,8 @@
 FROM centos:latest
 
 ### Install and configure SSH Server for SSH access to container ###
-RUN set -x && \
-	yum update && \
-	yum -y --nodocs install \
+RUN yum update && \
+    yum -y --nodocs install \
 		openssh \
 		openssh-server \
 		openssh-clients \
@@ -11,7 +10,7 @@ RUN set -x && \
 		passwd \
 		httpd \
 		net-tools && \
-	yum clean all
+   yum clean all
 
 RUN sshd-keygen && \
     sed -i "s/UsePAM.*/UsePAM yes/g" /etc/ssh/sshd_config && \
