@@ -20,7 +20,9 @@ RUN sshd-keygen && \
     echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers && \
 
 ### Download and install RadiUID from latest release ###
-ADD ./radiuid-2.4.3 /radiuid-2.4.3
+RUN mkdir -p /radiuid-2.4.3
+COPY /radiuid-2.4.3/radiuid.conf /radiuid-2.4.3/
+COPY /radiuid-2.4.3/radiuid.py /radiuid-2.4.3/
 
 RUN cd radiuid-2.4.3 && \
     python radiuid.py request reinstall replace-config no-confirm && \
