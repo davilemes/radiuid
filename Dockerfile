@@ -32,4 +32,5 @@ EXPOSE 1813/udp
 EXPOSE 1813/tcp
 EXPOSE 22/tcp
 
-CMD radiusd & radiuid run >> /etc/radiuid/STDOUT & /usr/sbin/sshd >> /etc/radiuid/SSH-STDOUT & /bin/bash
+CMD /usr/sbin/sshd
+#CMD radiusd & radiuid run >> /etc/radiuid/STDOUT & /usr/sbin/sshd >> /etc/radiuid/SSH-STDOUT & /bin/bash
