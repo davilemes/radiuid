@@ -11,12 +11,13 @@ RUN yum install -y \
 		sudo \
 		passwd \
 		httpd \
+		bash \
 		net-tools && \
    yum clean all
 
 RUN mkdir /var/run/sshd
 
-RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
+RUN sshd-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
 
 RUN sed -i "s/UsePAM.*/UsePAM yes/g" /etc/ssh/sshd_config && \
     sed -i "s/#UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config && \
